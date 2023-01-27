@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema, model, SchemaTypes } = mongoose;
-// TODO: Please make sure you edit the Concert model to whatever makes sense in this case
+
 const concertSchema = new Schema(
   {
     title: {
@@ -34,13 +34,12 @@ const concertSchema = new Schema(
       required: true
       },
       
-      
     },
     
     description: {
       type: String,
-      
     },
+    
     comments: 
     [{ 
       type: SchemaTypes.ObjectId, 
@@ -48,7 +47,6 @@ const concertSchema = new Schema(
     }]
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );

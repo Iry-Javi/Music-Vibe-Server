@@ -18,6 +18,7 @@ const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
+
   const { username, email, password } = req.body;
 
   // Check if usernamename or email or password  are provided as empty strings
@@ -30,6 +31,7 @@ router.post("/signup", (req, res, next) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   if (!emailRegex.test(email)) {
     res.status(400).json({ message: "Provide a valid email address." });
+
     return;
   }
 
@@ -43,8 +45,8 @@ router.post("/signup", (req, res, next) => {
     return;
   }
 
-  // Check the users collection if a user with the same email already exists
-  User.findOne({ email })
+  // Check the users collection if a user with the same username already exists
+  User.findOne({ username })
     .then((foundUser) => {
       // If the user with the same email already exists, send an error response
       if (foundUser) {
@@ -58,15 +60,18 @@ router.post("/signup", (req, res, next) => {
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ username, email, password: hashedPassword});
+
+      return User.create({ username, email, password: hashedPassword });
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
       // We should never expose passwords publicly
+
       const { email, username, _id } = createdUser;
 
       // Create a new object that doesn't expose the password
       const user = { email, username, _id };
+
 
       // Send a json response containing the user object
       res.status(201).json({ user: user });
@@ -76,16 +81,16 @@ router.post("/signup", (req, res, next) => {
 
 // POST  /auth/login - Verifies email and password and returns a JWT
 router.post("/login", (req, res, next) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   // Check if email or password are provided as empty string
-  if (email === "" || password === "") {
+  if (username === "" || password === "") {
     res.status(400).json({ message: "Provide email and password." });
     return;
   }
 
-  // Check the users collection if a user with the same email exists
-  User.findOne({ email })
+  // Check the users collection if a user with the same username exists
+  User.findOne({ username })
     .then((foundUser) => {
       if (!foundUser) {
         // If the user is not found, send an error response
@@ -98,10 +103,12 @@ router.post("/login", (req, res, next) => {
 
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
-        const { _id, email, username } = foundUser;
+
+        const { _id, username, image } = foundUser;
 
         // Create an object that will be set as the token payload
-        const payload = { _id, email, username };
+        const payload = { _id, username, image };
+console.log(payload)
 
         // Create a JSON Web Token and sign it
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
