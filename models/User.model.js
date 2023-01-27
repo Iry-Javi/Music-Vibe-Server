@@ -1,13 +1,13 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
 
 const userSchema = new Schema(
   {
-
     username: {
       type: String,
       required: [true, "Username is required."],
       unique: true,
     },
+
     email: {
       type: String,
       required: [true, "Email is required."],
@@ -21,15 +21,18 @@ const userSchema = new Schema(
     },
 
     image: {
-      type: String,
+      type: String
+    },
+    concert: {
+      type: [SchemaTypes.ObjectId],
+      ref: 'Concert',
+      default:[]
     }
-
+    
   },
   {
     timestamps: true,
   }
 );
 
-const User = model("User", userSchema);
-
-module.exports = User;
+module.exports = model("User", userSchema);
