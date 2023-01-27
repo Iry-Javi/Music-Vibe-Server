@@ -18,8 +18,17 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
+// const allRoutes = require("./routes");
+// app.use("/api", allRoutes);
+
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
+
+const concertRouter = require("./routes/concert.routes");
+app.use("/api", concertRouter);
+
+const commentRouter = require('./routes/comment.routes');
+app.use('/api', commentRouter);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
