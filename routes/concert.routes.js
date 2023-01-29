@@ -5,13 +5,16 @@ const mongoose = require('mongoose');
 const Concert =  require('../models/Concert.model');
 // const User = require('../models/User.model');
 const Comment = require('../models/Comment.model');
+const { Console } = require('console');
 
 
 router.post('/concerts', (req, res) => {
-  const { title, imageUrl, address, description, comment } = req.body;
-
-  Concert.create({ title, imageUrl, address, description, comment: [] })
-  .then(response => res.json(response))
+  const { title, imageUrl, description,  country, city, street, houseNumber, postalCode, comment } = req.body;
+console.log(req.body)
+  Concert.create({ title, imageUrl, description, country, city, street, houseNumber, postalCode, comment: [] })
+  .then(response => {
+      console.log(response)
+      res.json(response)})
   .catch(err => res.json(err));
 });
 
