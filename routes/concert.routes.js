@@ -9,9 +9,9 @@ const { Console } = require('console');
 
 
 router.post('/concerts', (req, res) => {
-  const { title, imageUrl, description,  country, city, street, houseNumber, postalCode, comment } = req.body;
+  const { title, image, description,  country, city, street, houseNumber, postalCode, comment } = req.body;
 console.log(req.body)
-  Concert.create({ title, imageUrl, description, country, city, street, houseNumber, postalCode, comment: [] })
+  Concert.create({ title, image, description, country, city, street, houseNumber, postalCode, comment: [] })
   .then(response => {
       console.log(response)
       res.json(response)})
