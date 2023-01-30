@@ -1,4 +1,6 @@
-const router = require("express").Router();
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
 
 const Comment = require('../models/Comment.model');
 const Concert = require('../models/Concert.model');
@@ -7,9 +9,9 @@ const Concert = require('../models/Concert.model');
 router.post('/comments', (req, res, next) => {
   const { user, comment } = req.body;
 
-  Comment.create({ user, comment, concert: concertId })
+  Comment.create({ user, comment, concert: concertid })
     .then(newComment => {
-      return Concert.findByIdAndUpdate(concertId, { $push: { comments: newComment._id } } );
+      return Concert.findByIdAndUpdate(concertid, { $push: { comments: newComment._id } } );
     })
     .then(response => res.json(response))
     .catch(err => res.json(err));

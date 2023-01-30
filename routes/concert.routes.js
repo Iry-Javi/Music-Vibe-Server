@@ -8,19 +8,20 @@ const Comment = require('../models/Comment.model');
 
 
 router.post('/concerts', (req, res) => {
-  const { title, imageUrl, address, description, comment } = req.body;
+  const { title, imageUrl, description, country, city, street, houseNumber, postalCode, comment } = req.body;
 
-  Concert.create({ title, imageUrl, address, description, comment: [] })
+  Concert.create({ title, imageUrl, description, country, city, street, houseNumber, postalCode, comment: [] })
   .then(response => res.json(response))
   .catch(err => res.json(err));
 });
 
 // GET /api/concerts -  Retrieves all of the concerts
-router.get('/concerts', (req, res, next) => {
+router.get('/concerts', (req, res) => {
   Concert.find()
     .populate('comments')
     .then(allConcerts => res.json(allConcerts))
-    .catch(err => res.json(err));
+    .catch(err => {res.json(err)
+    });
 });
 
 //  GET /api/concerts/:concertId -  Retrieves a specific project by id

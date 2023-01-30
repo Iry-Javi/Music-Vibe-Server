@@ -10,45 +10,48 @@ const concertSchema = new Schema(
 
     imageUrl: {
       type: String
+    },
 
-    },
-    address: { 
-      country: {
-        type: String, 
-      required: true
-      },
-      postalcode: {
-        type: String, 
-      required: true
-      },
-      street: {
-        type: String, 
-      required: true
-      },
-      housenumber: {
-        type: String, 
-      required: true
-      },
-      city: {
-        type: String, 
-      required: true
-      },
-      
-    },
-    
     description: {
       type: String,
     },
-    
+
+    country: {
+      type: String, 
+      required: true
+      },
+
+    city: {
+      type: String, 
+      required: true
+      },
+
+    street: {
+      type: String, 
+      required: true
+      },
+  
+    houseNumber: {
+      type: String, 
+      required: true
+      },
+
+    postalCode: {
+      type: String, 
+      required: true
+      },
+      
     comments: 
     [{ 
       type: SchemaTypes.ObjectId, 
       ref: "Comment" 
     }]
   },
+
   {
     timestamps: true,
   }
 );
+
 
 module.exports = model('Concert', concertSchema);
