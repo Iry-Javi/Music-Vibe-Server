@@ -8,7 +8,7 @@ const concertSchema = new Schema(
       required: [true, "Title is required."],
     },
 
-    imageUrl: {
+    image: {
       type: String
     },
 
