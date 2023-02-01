@@ -91,6 +91,7 @@ router.post("/login", (req, res, next) => {
 
   // Check the users collection if a user with the same username exists
   User.findOne({ username })
+  .populate("concert")
     .then((foundUser) => {
       if (!foundUser) {
         // If the user is not found, send an error response
@@ -104,10 +105,10 @@ router.post("/login", (req, res, next) => {
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
 
-        const { _id, username, image } = foundUser;
+        const { _id, username, image, concert } = foundUser;
 
         // Create an object that will be set as the token payload
-        const payload = { _id, username, image };
+        const payload = { _id, username, image, concert };
 console.log(payload)
 
         // Create a JSON Web Token and sign it

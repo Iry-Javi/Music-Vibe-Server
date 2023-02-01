@@ -3,20 +3,25 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Concert =  require('../models/Concert.model');
-// const User = require('../models/User.model');
+const User = require('../models/User.model');
 const Comment = require('../models/Comment.model');
 const { Console } = require('console');
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
 
-router.post('/concerts', (req, res) => {
+router.post('/concerts', isAuthenticated, (req, res) => {
   const { title, image, description,  country, city, street, houseNumber, postalCode, comment } = req.body;
+  const userId = req.payload._id
 console.log(req.body)
   Concert.create({ title, image, description, country, city, street, houseNumber, postalCode, comment: [] })
-  .then(response => {
-      console.log(response)
-      res.json(response)})
-  .catch(err => res.json(err));
+  .then(newConcert => {
+      console.log(newConcert)
+      return User.findByIdAndUpdate(userId, {
+        $push: { concert: newConcert._id },
+      },{new: true})
+    })
+      .then((updatedUser) => res.json(updatedUser))
+      .catch(err => res.json(err));
 });
 
 // GET /api/concerts -  Retrieves all of the concerts
@@ -41,6 +46,13 @@ router.get('/concerts/:concertId', (req, res, next) => {
   // We use .populate() method to get swap the `_id`s for the actual Task documents
   Concert.findById(concertId)
     .populate('comments')
+    .populate({ 
+      path: 'comments',
+      populate: {
+          path: "user", // populate property 'user' within property 'reviews'
+          model: "User",
+      } 
+  })
     .then(concert => res.status(200).json(concert))
     .catch(error => res.json(error));
 });

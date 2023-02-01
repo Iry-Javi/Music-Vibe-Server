@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 
 const MONGO_URI =
   process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/music-vibe-app-server";
+  // mongodb+srv://<username>:<password>@cluster0.1ftxulq.mongodb.net/
+
 console.log(MONGO_URI)
 mongoose
   .connect(MONGO_URI)

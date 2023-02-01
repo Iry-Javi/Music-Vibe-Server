@@ -40,6 +40,11 @@ const concertSchema = new Schema(
       type: String, 
       required: true
       },
+
+      owner: {
+        type: SchemaTypes.ObjectId,
+        ref: 'User',
+      },
       
     comments: 
     [{ 
