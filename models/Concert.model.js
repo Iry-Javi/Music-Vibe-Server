@@ -8,7 +8,7 @@ const concertSchema = new Schema(
       required: [true, "Title is required."],
     },
 
-    imageUrl: {
+    image: {
       type: String
     },
 
@@ -52,6 +52,5 @@ const concertSchema = new Schema(
     timestamps: true,
   }
 );
-
 
 module.exports = model('Concert', concertSchema);
