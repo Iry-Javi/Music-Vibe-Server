@@ -10,7 +10,7 @@ router.post('/comments', isAuthenticated, (req, res, next) => {
   const userId = req.payload._id
   const { user, comment, concert } = req.body;
 
-  Comment.create({ user, comment, concert })
+  Comment.create({ user: userId, comment, concert })
     .then(newComment => {
       return Concert.findByIdAndUpdate(concert, { $push: { comments: newComment._id } } );
     })
