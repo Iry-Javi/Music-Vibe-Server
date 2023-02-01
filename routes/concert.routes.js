@@ -6,6 +6,7 @@ const Concert =  require('../models/Concert.model');
 // const User = require('../models/User.model');
 const Comment = require('../models/Comment.model');
 const { Console } = require('console');
+const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
 
 router.post('/concerts', (req, res) => {
@@ -19,7 +20,8 @@ console.log(req.body)
 });
 
 // GET /api/concerts -  Retrieves all of the concerts
-router.get('/concerts', (req, res, next) => {
+router.get('/concerts', isAuthenticated, (req, res, next) => {
+  console.log(req.payload._id)
   Concert.find()
     .populate('comments')
     .then(allConcerts => res.json(allConcerts))
@@ -71,49 +73,51 @@ router.delete('/concerts/:concertId', (req, res, next) => {
     .catch(error => res.json(error));
 });
 
-
+module.exports = router;
 
 //COMMENT
-router.get('/:id/comment', (req, res, next) => {
+// router.get('/:id/comment', (req, res, next) => {
 
-  const {id} = req.params
+//   const {id} = req.params
 
-Concert.findById(id)
+// Concert.findById(id)
 
-  .then(foundConcert => res.render('concerts/comment', foundConcert))
-  .catch(err => console.log(err))
+//   .then(foundConcert => res.render('concerts/comment', foundConcert))
+//   .catch(err => console.log(err))
 
-});
+// });
 
-router.post('/:concertId/comment', (req, res, next) => {
+// router.post('/:concertId/comment', isAuthenticated, (req, res, next) => {
+//   console.log(req.payload._id)
 
-  const {comment} = req.body
-  console.log(comment)
-  const userId = req.session.currentUser._id
-  const {concertId} = req.params
-  console.log("USER ID", userId)
+//   const userId = req.payload._id
+//   const {comment} = req.body
+//   console.log(comment)
+  
+//   const {concertId} = req.params
+//   console.log("USER ID", userId)
 
-  if (!comment) {
-      res.render('/:id/comment', { errorMessage: 'Please write a comment before sending the form.' });
-      return;
-    }
+//   if (!comment) {
+//       res.render('/:id/comment', { errorMessage: 'Please write a comment before sending the form.' });
+//       return;
+//     }
 
-    Comment.create({user: userId, comment})
-      .then((newComment) => {
-        console.log(concertId)
-          Concert.findById(concertId)
+//     Comment.create({user: userId, comment, concert: concertId})
+//       .then((newComment) => {
+//         console.log(concertId)
+//           Concert.findById(concertId)
           
-              .then((commentedConcert) => {
-                  commentedConcert.comments.push(newComment._id) 
-                  commentedConcert.save()
-              })
-              .catch(err => console.log(err))
-      })
-      .then(() => res.redirect('/concerts'))
-      .catch(err => console.log(err))
+//               .then((commentedConcert) => {
+//                   commentedConcert.comments.push(newComment._id) 
+//                   commentedConcert.save()
+//               })
+//               .catch(err => console.log(err))
+//       })
+//       .then(() => res.redirect('/concerts'))
+//       .catch(err => console.log(err))
 
-});
+// });
 
 
 
-module.exports = router;
+

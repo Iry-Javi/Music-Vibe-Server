@@ -12,7 +12,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     allowed_formats: ["avif", "webp", "jpeg", "jpg", "png"],
-    folder: "music-vibe-app" 
+    folder: "music-vibe-app",  
   }
 });
 
