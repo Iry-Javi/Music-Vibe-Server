@@ -39,6 +39,7 @@ const concerts = [
      street: 'Passeig Olímpic',
      houseNumber: '17-19',
      postalCode: '08038',
+     owner: '63d286f4170680c8dfc8cd19'
    
     },
 
@@ -58,6 +59,7 @@ const concerts = [
      street: 'Jalan barat Bukit Jalil',
      houseNumber: 'none',
      postalCode: '57000',
+     owner: '63d286f4170680c8dfc8cd19'
    
      
     },
@@ -78,6 +80,7 @@ const concerts = [
      street: 'Wembley',
      houseNumber: '0WS',
      postalCode: 'HA9',
+     owner: '63d286f4170680c8dfc8cd19'
 
     },
 
@@ -97,6 +100,7 @@ const concerts = [
      street: 'Olympischer Platz',
      houseNumber: '3',
      postalCode: '14053',
+     owner: '63d286f4170680c8dfc8cd19'
   
     },
 
@@ -115,6 +119,7 @@ const concerts = [
      street: 'Cours de l-ile Seguin',
      houseNumber: '1',
      postalCode: '92100',
+     owner: '63d286f4170680c8dfc8cd19'
 
     },
 ];
